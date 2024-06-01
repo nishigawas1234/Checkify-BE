@@ -1,14 +1,33 @@
-const config = {
-    user : "foo",
-    password : "foo",
-    server : "127.0.0.1",
-    database : "products",
-    options :{
-        trustedConnection : true,
-        enableArithPort : true,
-       instancename : "ILM-MHP-LPT-MP2"
-    },
-    port : 55892
-}
+import { config } from 'dotenv';
+import { join } from 'path';
+
+config();
+
+const {
+  MYSQL_HOST,
+  MYSQL_USER,
+  MYSQL_PASSWORD,
+  MYSQL_DATABASE,
+  PATH_TO_RUN,
+  MYSQL_PORT,
+} = process.env;
+
+const path = PATH_TO_RUN || `migrations`;
+
+
+export const dbConfig = {
+  type: 'mysql',
+  host: MYSQL_HOST,
+  port: Number(MYSQL_PORT),
+  username: MYSQL_USER,
+  password: MYSQL_PASSWORD,
+  database: MYSQL_DATABASE,
+  entities: [join(process.cwd(), 'dist/**/*.entity.js')],
+  synchronize: true,
+
+
+  
+};
+
 
 module.exports = config

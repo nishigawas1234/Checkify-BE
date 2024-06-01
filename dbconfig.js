@@ -11,6 +11,7 @@ const {
   MYSQL_PORT,
 } = process.env;
 
+
 export const dbConfig = {
   type: 'mysql',
   host: MYSQL_HOST,
@@ -21,7 +22,6 @@ export const dbConfig = {
   entities: [join(process.cwd(), 'dist/**/*.entity.js')],
   synchronize: true,
 
-  
 };
 
 

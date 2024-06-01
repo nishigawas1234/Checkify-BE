@@ -22,6 +22,7 @@ if (config.use_env_variable) {
     database: process.env.MYSQL_DATABASE,
     host: process.env.MYSQL_HOST,
     dialect: 'mysql',
+    dialectModule: require('mysql2'),
     port: process.env.MYSQL_PORT
   });
 }

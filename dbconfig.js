@@ -8,12 +8,8 @@ const {
   MYSQL_USER,
   MYSQL_PASSWORD,
   MYSQL_DATABASE,
-  PATH_TO_RUN,
   MYSQL_PORT,
 } = process.env;
-
-const path = PATH_TO_RUN || `migrations`;
-
 
 export const dbConfig = {
   type: 'mysql',
@@ -24,7 +20,6 @@ export const dbConfig = {
   database: MYSQL_DATABASE,
   entities: [join(process.cwd(), 'dist/**/*.entity.js')],
   synchronize: true,
-
 
   
 };

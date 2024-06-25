@@ -1,32 +1,62 @@
 'use strict';
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  const Task = sequelize.define('Task', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'uuid',
-      }
-    },
+  class Task extends Model {
+    static associate(models) {
+      Task.belongsTo(models.User, {
+        foreignKey: 'user_id', // This should match the column name in NoteTable
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
+    }
+  }
+
+  Task.init({
     uuid: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
     },
-    title: DataTypes.STRING,
-    isChecked: DataTypes.BOOLEAN,
-    isPersonal: DataTypes.BOOLEAN,
-    description: DataTypes.TEXT,
-    created_at: DataTypes.DATE
-  }, {});
-  Task.associate = function(models) {
-    Task.belongsTo(models.User, { foreignKey: 'user_id' });
-  };
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'UserTable',
+        key: 'uuid',
+      },
+    },
+    title: {
+      type: DataTypes.STRING,
+    },
+    isChecked: {
+      type: DataTypes.BOOLEAN,
+    },
+    isPersonal: {
+      type: DataTypes.BOOLEAN,
+    },
+    description:{
+      type: DataTypes.TEXT,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      allowNull: false,
+    },
+  }, {
+    sequelize,
+    modelName: 'Task',
+    tableName: 'TaskTable',
+    timestamps: true,
+    // updatedAt: 'updated_at',
+  });
+
   return Task;
 };

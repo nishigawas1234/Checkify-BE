@@ -6,6 +6,7 @@ const app = express();
 const getDataRoutes = require("./routes/getData.route");
 const addDataRoutes = require("./routes/addData.route");
 const userLogin = require("./routes/userLogin.route");
+const notes = require("./routes/notes.route");
 
 // Configure CORS
 app.use(cors({
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use("/", getDataRoutes);
 app.use("/", addDataRoutes);
 app.use("/", userLogin);
+app.use("/", notes);
 
 app.get("/", (req, res) => {
     res.json({ success: true });

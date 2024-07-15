@@ -104,6 +104,12 @@ function login(req, res) {
                   res.status(200).json({
                     message: "Authentication successful!",
                     token: token,
+                    user: {
+                      id: user.id,
+                      uuid: user.uuid,
+                      name: user.name,
+                      email: user.email,
+                    },
                   });
                 }
               );

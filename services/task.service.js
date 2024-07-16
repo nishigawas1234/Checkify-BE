@@ -31,7 +31,6 @@ const AddData = (req, res) => {
 
 const GetData = async (req, res) => {
   const { user_id } = req.params; // Extract user_id from URL parameter
-  //    const user_id = "3664ed07-4b22-4ce3-a937-ca1c4578bf68"
   try {
     const tasks = await model.Task.findAll({
       where: {
@@ -53,4 +52,29 @@ const GetData = async (req, res) => {
   }
 };
 
-module.exports = { AddData, GetData };
+const UpdateTask = async (req, res) => {
+  const user_id = req.params.user_id;
+  const task_id = req.params.task_id;
+  const post = {
+    isChecked: req.body.isChecked,
+  };
+
+  try {
+    // Check if the task exists
+    const task = await model.Task.findOne({ where: { user_id: user_id, uuid: task_id } });
+
+    if (!task) {
+      return res.status(404).json({ success: false, message: "Task not found" });
+    }
+
+    // Update the task if it exists
+    await model.Task.update(post, { where: { user_id: user_id, uuid: task_id } });
+    res.status(201).json({ success: true, message: "Task updated" });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "An error occurred", error: err.message });
+  }
+};
+
+module.exports = { AddData, GetData,UpdateTask };

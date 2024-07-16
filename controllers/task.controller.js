@@ -1,4 +1,4 @@
-const {AddData, GetData} = require("../services/task.service");
+const {AddData, GetData,UpdateTask} = require("../services/task.service");
 
 
 exports.addData = (req, res) => {
@@ -8,6 +8,10 @@ exports.addData = (req, res) => {
 exports.getData = (req, res) => {
     GetData(req, res);
 }
+exports.updateTask = (req, res) => {
+    UpdateTask(req, res);
+}
+
 
 
 
